@@ -182,9 +182,9 @@ stages:
       - powershell: |
           mkdir $(Build.SourcesDirectory)\coverage\
 
-          # Currently coverlet is not able to both merge the test results and convert them to OpenCover format.
-          # Due to this, we have to run tests per test project and merge the results.
-          # The last test run will do the conversion by using `-p:CoverletOutputFormat=opencover` parameter.
+          //# Currently coverlet is not able to both merge the test results and convert them to OpenCover format.
+          //# Due to this, we have to run tests per test project and merge the results.
+          //# The last test run will do the conversion by using `-p:CoverletOutputFormat=opencover` parameter.
           function Run-Tests-With-Coverage {
             param (
               $projectPath
