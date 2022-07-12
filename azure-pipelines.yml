@@ -93,18 +93,12 @@ stages:
         inputs:
           solution: 'scripts\version\ChangeVersion.proj'
           msbuildArgs: '/p:Sha1=$(Build.SourceVersion) /p:BranchName=$(Build.SourceBranchName) /p:BuildNumber=$(Build.BuildId)  /p:BuildConfiguration=$(BuildConfiguration)'
-      - task: SonarCloudPrepare@1
-        displayName: 'Prepare analysis on SonarCloud'
-        inputs:
-          SonarCloud: 'SonarCloud'
-          organization: '$(sonarCloudOrganization)'
-          projectKey: '$(sonarCloudMsBuildProjectKey)'
-          projectName: '$(sonarCloudMsBuildProjectName)'
-          projectVersion: '$(SONAR_PROJECT_VERSION)'
-          scannerMode: MSBuild
-          extraProperties: |
-            sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)/coverage/**.xml"
-            sonar.cs.vstest.reportsPaths="$(Build.SourcesDirectory)/TestResults/*.trx"
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: '.netcore'
+    scannerMode: 'MSBuild'
+    projectKey: 'SAST--Analysis'
+    projectName: 'SAST--Analysis'
       - task: DotNetCoreCLI@2
         displayName: Dotnet restore $(tfsProcessorSolution)
         inputs:
